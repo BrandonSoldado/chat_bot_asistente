@@ -143,23 +143,27 @@ def enviar(nro_tefeno):
         print(nombre)
         marcar_mensaje_enviado2()
         if(nombre!=""):
+            #account_sid = 'AC0700301559f20ae40bdd55dd06748660'
+            #auth_token = '314ad44592ca8d53f6d7891d4b45c042'
             client = Client(account_sid, auth_token)
             message = client.messages.create(
-                #from_='whatsapp:+14155238886',
+                from_='whatsapp:+14155238886',
                 body='Hola '+ nombre +"!",
                 to=nro_tefeno
             )
             return 'mensaje enviado'
         else:
+            #account_sid = 'AC0700301559f20ae40bdd55dd06748660'
+            #auth_token = '314ad44592ca8d53f6d7891d4b45c042'
             client = Client(account_sid, auth_token)
             message = client.messages.create(
-                #from_='whatsapp:+14155238886',
+                from_='whatsapp:+14155238886',
                 body="usuario no existe",
                 to=nro_tefeno
             )
             return 'mensaje enviado'
     else:
-        return 'hola'
+        return 'null'
         
 
 
