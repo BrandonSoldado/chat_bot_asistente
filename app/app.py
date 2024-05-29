@@ -2,6 +2,7 @@ from flask import Flask, request, session, make_response
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import psycopg2
+<<<<<<< HEAD
 from psycopg2 import OperationalError, Error
 from flask import jsonify
 import prompt
@@ -33,6 +34,13 @@ def obtener_preguntas_usuario(usuario_id):
     except (OperationalError, Error) as e:
         print(f"Error al obtener preguntas del usuario: {e}")
         return ""
+=======
+from flask import jsonify
+
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+>>>>>>> 0d0ada49d9892eee755cd9ca8bfd0e9c454e7aeb
 
 def obtener_nombre_usuario(telefono):
     conn = psycopg2.connect(
@@ -50,6 +58,7 @@ def obtener_nombre_usuario(telefono):
     conn.close()
     return nombre[0] if nombre else ""
 
+<<<<<<< HEAD
 def obtener_id_usuario(telefono):
     conn = psycopg2.connect(
         dbname="ChatBot",
@@ -125,6 +134,8 @@ def enviar_mensaje2(nombre):
     return response.choices[0].message.content
 
 
+=======
+>>>>>>> 0d0ada49d9892eee755cd9ca8bfd0e9c454e7aeb
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -132,6 +143,7 @@ def webhook():
     from_number = request.form.get("From")
     to_number = request.form.get("To")
     nombre = obtener_nombre_usuario(from_number)
+<<<<<<< HEAD
     if message_body.lower() == "confirm":
         respuesta = enviar_mensaje2(nombre) 
 
@@ -144,12 +156,28 @@ def webhook():
             respuesta = "Usuario no existe!"
 
     print(f"El mensaje fue enviado a: {from_number}")
+=======
+    
+    # Verificar si el mensaje es "confirmar"
+    if message_body.lower() == "confirm":
+        print(f"Confirmación recibida de: {from_number}")
+        return make_response("", 204)  # No Content
+
+    if nombre:
+        respuesta = f"¡Hola! {nombre}, soy el asistente de servicios de elevadores. Estoy aquí para ayudarte con tus consultas y solicitudes relacionadas con los elevadores. Puedo ayudarte a solicitar servicios de mantenimiento, monitorear el estado de los elevadores en tiempo real, programar horarios de operación y mucho más. ¿En qué puedo ayudarte hoy?"
+    else:
+        respuesta = "Usuario no existe!"
+
+    print(f"El mensaje fue enviado a: {from_number}")
+    print(respuesta)
+>>>>>>> 0d0ada49d9892eee755cd9ca8bfd0e9c454e7aeb
     print(message_body)
     
     resp = MessagingResponse()
     resp.message(respuesta)
     return str(resp)
 
+<<<<<<< HEAD
 
 
 
@@ -157,3 +185,8 @@ def webhook():
 if __name__=='__main__':
     app.run(debug=True, port=5000)
     
+=======
+  
+if __name__=='__main__':
+    app.run(debug=True, port=5000)
+>>>>>>> 0d0ada49d9892eee755cd9ca8bfd0e9c454e7aeb
